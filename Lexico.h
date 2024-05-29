@@ -23,21 +23,21 @@
 #define ID 256
 #define NUM 257
 #define ASIGNACION 258
-using namespace std;
 
 class Lexico {
-    public:
-        Lexico(int argc, char* argv[]);
-        ~Lexico();
-        void run();
-    private:
-        int scanner();
-        void mostrar(int token);
-        int isReserved();
+public:
+    Lexico(int argc, char* argv[]);
+    ~Lexico();
+    void run();
 
-        FILE* file;
-        char lexema[80];
-        map<string, string> pseudocodeToCpp;
+private:
+    int scan();
+    void show(int token);
+    int isReserved();
+
+    FILE* file;
+    char lexeme[80];
+    std::map<std::string, std::string> pseudocodeToCpp; // Mapa para palabras clave
 };
 
-#endif
+#endif // LEXICO_H
