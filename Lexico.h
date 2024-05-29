@@ -34,6 +34,10 @@ class Lexico {
         int scanner();
         void mostrar(int token);
         int isReserved();
+
+        FILE* file;
+        char lexema[80];
+        map<string, string> pseudocodeToCpp;
 };
 
 #endif
