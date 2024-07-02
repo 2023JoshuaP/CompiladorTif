@@ -3,7 +3,7 @@
 El trabajo propuesto que se va a realizar será un compilador de Pseudocódigo a un Lenguaje de Alto Nivel que es C++, para realizarlo se requiere el uso de una gramática:
 
 ```plaintext
-<EPLOAM> ::= <comentario>? "algoritmo" <nombre Algoritmo> "{" 
+<PseudoCode> ::= <comentario>? "algoritmo" <nombre Algoritmo> "{" 
                 "principal" "{" <cuerpo> "}" 
                 "{" <declaraciones> "}"
             "}"
