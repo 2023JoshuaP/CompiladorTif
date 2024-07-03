@@ -6,7 +6,6 @@
 #include <vector>
 #include <algorithm>
 #include <cctype>
-
 using namespace std;
 
 enum class TokenType {
@@ -15,35 +14,35 @@ enum class TokenType {
 
 struct Token {
     TokenType type;
-    std::string value;
+    string value;
     int line;
     int column;
 };
 
 class AnalizadorLexico {
-public:
-    AnalizadorLexico(const std::string& source);
+    public:
+        AnalizadorLexico(const string& source);
 
-    std::vector<Token> tokenize();
+        vector<Token> tokenize();
 
-private:
-    std::string source;
-    size_t position;
-    int line;
-    int column;
+    private:
+        string source;
+        size_t position;
+        int line;
+        int column;
 
-    void advance();
+        void advance();
 
-    void tokenizeComment(std::vector<Token>& tokens);
-    void tokenizeIdentifierOrKeyword(std::vector<Token>& tokens);
-    void tokenizeNumber(std::vector<Token>& tokens);
-    void tokenizeString(std::vector<Token>& tokens);
-    void tokenizeOperator(std::vector<Token>& tokens);
-    void tokenizeSeparator(std::vector<Token>& tokens);
+        void tokenizeComment(vector<Token>& tokens);
+        void tokenizeIdentifierOrKeyword(vector<Token>& tokens);
+        void tokenizeNumber(vector<Token>& tokens);
+        void tokenizeString(vector<Token>& tokens);
+        void tokenizeOperator(vector<Token>& tokens);
+        void tokenizeSeparator(vector<Token>& tokens);
 
-    bool isKeyword(const std::string& value);
-    bool isOperator(char ch);
-    bool isSeparator(char ch);
+        bool isKeyword(const string& value);
+        bool isOperator(char ch);
+        bool isSeparator(char ch);
 };
 
 #endif
