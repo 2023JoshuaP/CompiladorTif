@@ -4,22 +4,33 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <stack>
 #include "./AnalizadorLexico.h"
 using namespace std;
+
+struct ParserState {
+    size_t position;
+    Token currentToken;
+};
 
 class AnalizadorSintactico {
     public:
         AnalizadorSintactico(const vector<Token>& tokens);
         void parse();
     private:
-        std::vector<Token> tokens;
+        vector<Token> tokens;
         size_t position;
+        stack<ParserState> stateStack;
 
         Token currentToken();
         void advance();
 
         void match(TokenType type);
-        void error(const std::string& message);
+        void error(const string& message);
+
+        void pushState();
+        void popState();
+        void restoreState();
 
         void parsePseudoCode();
         void parseNombreAlgoritmo();
