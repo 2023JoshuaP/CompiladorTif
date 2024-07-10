@@ -5,43 +5,39 @@ El trabajo propuesto que se va a realizar será un compilador de Pseudocódigo a
 
 
 ```plaintext
-<PseudoCode> ::= <comentario>? "algoritmo" <nombre Algoritmo> "{" 
-                "principal" "{" <cuerpo> "}" 
-                "{" <declaraciones> "}"
-            "}"
+<PseudoCode> ::= "algoritmo" <Nombre_Algoritmo> "{" "principal" "{" <Cuerpo> "}" "}"
 ```
 
-- **Descripción:** Define la estructura principal, puede comenzar con comentarios de manera opcional. Se inicia con la palabra clave **algoritmo**, seguida con el nombre del Algoritmo, y contiene dos bloques principales: **cuerpo** y **declaraciones** de variables.
+- **Descripción:** Define la estructura básica de un algoritmo en pseudocódigo. Comienza con la palabra clave **algoritmo**, seguida del nombre del algoritmo, luego la sección principal que contiene el cuerpo principal del algoritmo.
 
 ```plaintext
-<nombre Algoritmo> ::= <identificador> // Nombre del algoritmo
+<nombre Algoritmo> ::= <identificador>
 ```
 
 - **Descripción:** Define el nombre del algoritmo utilizando un identificador válido.
 
 ```plaintext
-<declaraciones> ::= <declaracion>*
+<Cuerpo> ::= (<declaracion> | <asignacion> | <lectura> | <impresion> | <decision> | <repeticion>)*
 ```
-- **Descripción:** Representa una serie de declaraciones de variables. Puedo haber declaraciones o no.
+- **Descripción:** El cuerpo principal del algoritmo puede contener múltiples declaraciones, asignaciones, lecturas, impresiones, decisiones o repeticiones.
 
 ```plaintext
-<declaracion> ::= <tipo> <declara variable> ("," <declara variable>)* ";"
-<declara variable> ::= <variable> ("=" <expresión>)?
+<declaracion> ::= <Tipo> <declara_variable> ("," <declara_variable>)* ";"
 ```
 
-- **Descripción:** Define la declaración de una o más variables de un cierto tipo, con la opción de inicializarlas.
+- **Descripción:** Define una o más variables de un tipo específico en una sola línea, separadas por comas, terminando con un punto y coma.
 
 ```plaintext
-<tipo> ::= "int" | "float" | "string" | "bool" | "char"
+<declara_variable> ::= <identificador> ("=" <expresion>)?
 ```
 
-- **Descripción:** Especifica los tipos de datos posibles para las variables.
+- **Descripción:** Declara una variable que puede opcionalmente ser inicializada con una expresión.
 
 ```plaintext
-<cuerpo> ::= (<asignacion> | <lectura> | <impresion> | <decision> | <repeticion>)*
+<Tipo> ::= "entero" | "real" | "cadena" | "booleano" | "caracter"
 ```
 
-- **Descripción:** Define el cuerpo del programa, que puede contener múltiples sentencias de asignación, lectura, impresión, decisiones o repeticiones.
+- **Descripción:** Define el tipo de variable que será.
 
 ```plaintext
 <asignacion> ::= <variable> <operador asignación> <expresión> ";"
@@ -122,66 +118,48 @@ El trabajo propuesto que se va a realizar será un compilador de Pseudocódigo a
 
 ```plaintext
 
-<PseudoCode> ::= <comentario>? "algoritmo" <nombre Algoritmo> "{" 
-                "principal" "{" <cuerpo> "}" 
-                "{" <declaraciones> "}"
-            "}"
+<PseudoCode> ::= <Comentario>? "algoritmo" <Nombre Algoritmo> "{" principal "{" <Cuerpo> "}" "}"
 
-<nombre Algoritmo> ::= <identificador> 
+<Nombre Algoritmo> ::= <identificador>
 
-<declaraciones> ::= <declaracion>*
+<Cuerpo> ::= (<declaracion> | <asignacion> | <lectura> | <impresion> | <decision> | <repeticion>)*
 
-<declaracion> ::= <tipo> <declara variable> ("," <declara variable>)* ";"
-
+<declaracion> ::= <Tipo> <declara variable> ("," <declara variable>)* ";"
 <declara variable> ::= <variable> ("=" <expresión>)?
-
-<tipo> ::= "int" | "float" | "string" | "bool" | "char"
-
-<cuerpo> ::= (<asignacion> | <lectura> | <impresion> | <decision> | <repeticion>)*
+<Tipo> ::= "entero" | "real" | "cadena" | "booleano" | "caracter"
 
 <asignacion> ::= <variable> <operador asignación> <expresión> ";"
 <operador asignación> ::= "=" | "+=" | "-=" | "*=" | "/="
 
 <lectura> ::= "leer" "(" <variable> ")" ";"
+<impresion> ::= "imprimir" "(" <expresionCadena> ")" ";"
 
-<impresion> ::= "imprimir" "(" <expresiónCadena> ")" ";"
+<decision> ::= <decision simple> | <decision multiple>
+<decision simple> ::= "si" "(" <expresionBooleana> ")" "{" <Cuerpo> "}" ("sino" "{" <Cuerpo> "}")?
+<decision multiple> ::= "segun" "(" <variable> ")" "{" ( "caso" <valor> ":" <Cuerpo> "termina" ";")* "otroCaso" ":" <Cuerpo> "}"
 
-<decision> ::= <decision simple> | <decision múltiple>
-
-<decision simple> ::= "si" "(" <expresiónBooleana> ")" "{" <cuerpo> "}" 
-                    ("sino" "{" <cuerpo> "}")?
-
-<decision múltiple> ::= "segun" "(" <variable> ")" "{" 
-                        ("caso" <valor> ":" <cuerpo> "termina" ";")* 
-                        "otroCaso" ":" <cuerpo> 
-                        "}"
-
-<repeticion> ::= <ciclo Para> | <ciclo Mientras> | <ciclo Haga Mientras>
-
-<ciclo Para> ::= "para" "(" <inicialización Para> ";" <expresiónBooleana> ";" <asignacion Para> ")" "{" <cuerpo> "}"
-
-<inicialización Para> ::= <tipo>? <variable> "=" <expresión>
-
-<asignacion Para> ::= <variable> <operador autoincremento> | <variable> <operador asignación> <expresión>
+<repeticion> ::= <Ciclo Para> | <Ciclo Mientras> | <Ciclo Haga Mientras>
+<Ciclo Para> ::= "para" "(" <Inicializacion Para> ";" <expresionBooleana> ";" <Asignacion Para> ")" "{" <Cuerpo> "}"
+<Inicializacion Para> ::= <Tipo>? <variable> "=" <expresión>
+<Asignacion Para> ::= <variable> <operador autoincremento> | <variable> <operador asignación> <expresión>
 <operador autoincremento> ::= "++" | "--"
 
-<ciclo Mientras> ::= "mientras" "(" <expresiónBooleana> ")" "{" <cuerpo> "}"
+<Ciclo Mientras> ::= "mientras" "(" <expresionBooleana> ")" "{" <Cuerpo> "}"
+<Ciclo Haga Mientras> ::= "haga" "{" <Cuerpo> "}" "mientras" "(" <expresionBooleana> ")" ";"
 
-<ciclo Haga Mientras> ::= "haga" "{" <cuerpo> "}" "mientras" "(" <expresiónBooleana> ")" ";"
-
-<expresión> ::= <expresiónEntera> | <expresiónReal> | <expresiónCadena> | <expresiónBooleana>
-
-<expresiónEntera> ::= <entero>
-<expresiónReal> ::= <real>
-<expresiónCadena> ::= <cadena>
-<expresiónBooleana> ::= <booleana>
+<expresión> ::= <expresionEntera> | <expresionReal> | <expresionCadena> | <expresionBooleana> | <expresionCaracter>
+<expresionEntera> ::= <entero>
+<expresionReal> ::= <real>
+<expresionCadena> ::= <cadena>
+<expresionBooleana> ::= <booleana>
+<expresionCaracter> ::= <caracter>
 
 <entero> ::= [0-9]+
 <real> ::= [0-9]+"."[0-9]+
-<cadena> ::= "\"" .*? "\""
+<cadena> ::= "\"" .* "\""
 <booleana> ::= "true" | "false"
-
-<valor> ::= <entero> | <real> | <cadena> | <booleana>
+<caracter> ::= "'" . "'"
+<valor> ::= <entero> | <real> | <cadena> | <booleana> | <caracter>
 
 <variable> ::= <identificador>
 <identificador> ::= [a-zA-Z_][a-zA-Z0-9_]*
