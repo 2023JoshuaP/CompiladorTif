@@ -1,8 +1,43 @@
-algoritmo miAlgoritmo {
+algoritmo complejo {
     principal {
-        entero x;
-        x = 10;
-        imprimir(x);
-        ???;
+        entero a, b, resultado;
+        real x;
+        cadena mensaje;
+        booleano flag;
+        caracter c;
+        
+        a = 10;
+        b = 20;
+        x = 15.5;
+        mensaje = "El resultado es: ";
+        flag = true;
+        c = 'z';
+        
+        si (a > b) {
+            resultado = a - b;
+        } sino {
+            resultado = b - a;
+        }
+        
+        imprimir(mensaje);
+        imprimir(resultado);
+        imprimir(c);
+        
+        para (entero i = 0; i < 10; i++) {
+            imprimir(i);
+        }
+        
+        mientras (flag) {
+            imprimir("Looping...");
+            flag = false;
+        }
+        
+        segun (a) {
+            caso 10: imprimir("A es 10"); termina;
+            caso 20: imprimir("A es 20"); termina;
+            otroCaso: imprimir("A tiene otro valor");
+        }
+        
+        leer(b);
     }
 }
