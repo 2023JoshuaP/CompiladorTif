@@ -1,43 +1,59 @@
-algoritmo complejo {
+algoritmo MiAlgoritmo {
     principal {
-        entero a, b, resultado;
-        real x;
-        cadena mensaje;
-        booleano flag;
-        caracter c;
-        
-        a = 10;
-        b = 20;
-        x = 15.5;
-        mensaje = "El resultado es: ";
-        flag = true;
-        c = 'z';
-        
-        si (a > b) {
-            resultado = a - b;
-        } sino {
-            resultado = b - a;
-        }
-        
+        // Declaración de variables
+        entero a = 10, b;
+        real x = 3.14;
+        cadena mensaje = "Hola, mundo";
+        booleano flag = true;
+
+        // Asignaciones
+        a = 5;
+        b = a + 2;
+        x += 1.86;
+        mensaje = "Nuevo mensaje";
+
+        // Lectura de datos
+        leer(a);
+
+        // Impresión de datos
+        imprimir("El valor de a es: " + a);
+        imprimir("El valor de x es: " + x);
         imprimir(mensaje);
-        imprimir(resultado);
-        imprimir(c);
-        
-        para (entero i = 0; i < 10; i++) {
-            imprimir(i);
+
+        // Decisión simple
+        si (a > b) {
+            imprimir("a es mayor que b");
+        } sino {
+            imprimir("a no es mayor que b");
         }
-        
-        mientras (flag) {
-            imprimir("Looping...");
-            flag = false;
-        }
-        
+
+        // Decisión múltiple
         segun (a) {
-            caso 10: imprimir("A es 10"); termina;
-            caso 20: imprimir("A es 20"); termina;
-            otroCaso: imprimir("A tiene otro valor");
+            caso 1:
+                imprimir("a es 1");
+                termina;
+            caso 2:
+                imprimir("a es 2");
+                termina;
+            otroCaso:
+                imprimir("a no es ni 1 ni 2");
         }
-        
-        leer(b);
+
+        // Ciclo Para
+        para (entero i = 0; i < 10; i++) {
+            imprimir("i es: " + i);
+        }
+
+        // Ciclo Mientras
+        mientras (a < 10) {
+            imprimir("a es menor que 10");
+            a++;
+        }
+
+        // Ciclo Haga Mientras
+        haga {
+            imprimir("Ejecutando al menos una vez");
+            a--;
+        } mientras (a > 5);
     }
 }
