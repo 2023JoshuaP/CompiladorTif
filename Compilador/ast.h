@@ -8,13 +8,12 @@
 using namespace std;
 class ASTNode;
 using ASTNodePtr = shared_ptr<ASTNode>;
-
 enum class ASTNodeType {
     Program, Declaration, Assignment, Read, Print, If, While, For, Switch, Block, Expression, Variable, Operator
 };
 
 class ASTNode {
-    public:
+public:
     ASTNodeType type;
     int line;
     int column;

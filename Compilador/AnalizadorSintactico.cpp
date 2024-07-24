@@ -1,20 +1,16 @@
 #include "AnalizadorSintactico.h"
-
 bool isAssignmentOperator(const string& op) {
     static const vector<string> comparisonOperators = {"=", "+=", "-=", "*=", "/="};
     return find(comparisonOperators.begin(), comparisonOperators.end(), op) != comparisonOperators.end();
 }
-
 bool isComparisonOperator(const string& op) {
     static const vector<string> comparisonOperators = {"==", "!=", "<", ">", "<=", ">="};
     return find(comparisonOperators.begin(), comparisonOperators.end(), op) != comparisonOperators.end();
 }
-
 bool isAutoincrementOperator(const string& op) {
     static const vector<string> comparisonOperators = {"++", "--"};
     return find(comparisonOperators.begin(), comparisonOperators.end(), op) != comparisonOperators.end();
 }
-
 bool isType(const string& value) {
     static const vector<string> types = {"entero", "real", "cadena", "booleano", "caracter"};
     return find(types.begin(), types.end(), value) != types.end();
@@ -36,7 +32,6 @@ string tokenTypeToString(TokenType type) {
         default: return "Unknown";
     }
 }
-
 void AnalizadorSintactico::advance() {
     if (tokenIndex < tokens.size() - 1) {
         tokenIndex++;
@@ -45,7 +40,6 @@ void AnalizadorSintactico::advance() {
         currentToken = { TokenType::EndOfFile, "", currentToken.line, currentToken.column };
     }
 }
-
 Token AnalizadorSintactico::peek(size_t offset) {
     if (tokenIndex + offset < tokens.size()) {
         return tokens[tokenIndex + offset];
@@ -53,7 +47,6 @@ Token AnalizadorSintactico::peek(size_t offset) {
         return { TokenType::EndOfFile, "", currentToken.line, currentToken.column };
     }
 }
-
 void AnalizadorSintactico::expect(TokenType type) {
     if (currentToken.type == type) {
         advance();
@@ -63,7 +56,6 @@ void AnalizadorSintactico::expect(TokenType type) {
         + " expected: " + tokenTypeToString(type));
     }
 }
-
 void AnalizadorSintactico::expect(TokenType type, string expect_) {
     if (currentToken.type == type && currentToken.value == expect_) {
         advance();
@@ -73,11 +65,9 @@ void AnalizadorSintactico::expect(TokenType type, string expect_) {
         + ".Expected: " + expect_ + " type: " + tokenTypeToString(type));
     }
 }
-
 ASTNodePtr AnalizadorSintactico::parse() {
     return parseProgram();
 }
-
 ASTNodePtr AnalizadorSintactico::parseProgram() {
     expect(TokenType::Keyword,"algoritmo"); 
     string programName = currentToken.value;
@@ -91,7 +81,6 @@ ASTNodePtr AnalizadorSintactico::parseProgram() {
     expect(TokenType::EndOfFile); 
     return make_shared<ASTNode>(ASTNodeType::Program, currentToken.line, currentToken.column, programName, mainBlock);
 }
-
 ASTNodePtr AnalizadorSintactico::parseBlock() {
     ASTNodePtr blockNode = make_shared<ASTNode>(ASTNodeType::Block, currentToken.line, currentToken.column,"cuerpo");
     while ((currentToken.type != TokenType::Separator && currentToken.value != "}") || currentToken.value != "termina") {
@@ -100,7 +89,6 @@ ASTNodePtr AnalizadorSintactico::parseBlock() {
     }
     return blockNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseStatement() {
     switch(currentToken.type) {
         case TokenType::Keyword:
@@ -130,7 +118,6 @@ ASTNodePtr AnalizadorSintactico::parseStatement() {
     }
     return nullptr;
 }
-
 ASTNodePtr AnalizadorSintactico::parseDeclaration() {
     string type = currentToken.value;
     advance();
@@ -164,7 +151,6 @@ ASTNodePtr AnalizadorSintactico::parseDeclaration() {
     expect(TokenType::Separator,";");
     return declNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseAssignment() {
     ASTNodePtr assignNode = make_shared<ASTNode>(ASTNodeType::Assignment, currentToken.line, currentToken.column, "asignacion(es)");
     while(true){
@@ -210,7 +196,6 @@ ASTNodePtr AnalizadorSintactico::parseAssignment() {
     expect(TokenType::Separator,";");
     return assignNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseRead() {
     ASTNodePtr readNode = make_shared<ASTNode>(ASTNodeType::Read, currentToken.line, currentToken.column,"leer");
     expect(TokenType::Keyword,"leer");
@@ -223,7 +208,6 @@ ASTNodePtr AnalizadorSintactico::parseRead() {
     expect(TokenType::Separator,";");
     return readNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parsePrint() {
     ASTNodePtr printNode = make_shared<ASTNode>(ASTNodeType::Print, currentToken.line, currentToken.column,"salida");
     expect(TokenType::Keyword,"imprimir"); 
@@ -248,7 +232,6 @@ ASTNodePtr AnalizadorSintactico::parsePrint() {
     expect(TokenType::Separator,";");
     return printNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseIf() {
     ASTNodePtr ifNode = make_shared<ASTNode>(ASTNodeType::If,currentToken.line, currentToken.column,"condicional_si");
     expect(TokenType::Keyword,"si");
@@ -271,7 +254,6 @@ ASTNodePtr AnalizadorSintactico::parseIf() {
     }
     return ifNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseWhile() {
     ASTNodePtr whileNode = make_shared<ASTNode>(ASTNodeType::While, currentToken.line, currentToken.column,"Mientras");
     expect(TokenType::Keyword,"mientras");
@@ -285,7 +267,6 @@ ASTNodePtr AnalizadorSintactico::parseWhile() {
     whileNode->children.push_back(body);
     return whileNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseDoWhile() {
     ASTNodePtr dowhileNode = make_shared<ASTNode>(ASTNodeType::While, currentToken.line, currentToken.column,"Haga-mientras");
     expect(TokenType::Keyword,"haga");
@@ -301,7 +282,6 @@ ASTNodePtr AnalizadorSintactico::parseDoWhile() {
     dowhileNode->children.push_back(condition);
     return dowhileNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseFor() {
     ASTNodePtr forNode = make_shared<ASTNode>(ASTNodeType::For, currentToken.line, currentToken.column,"bucle para");
     expect(TokenType::Keyword,"para");
@@ -320,7 +300,6 @@ ASTNodePtr AnalizadorSintactico::parseFor() {
     forNode->children.push_back(body);
     return forNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseSwitch() {
     expect(TokenType::Keyword,"segun");
     expect(TokenType::Separator,"(");
@@ -350,20 +329,17 @@ ASTNodePtr AnalizadorSintactico::parseSwitch() {
     expect(TokenType::Separator,"}");
     return switchNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseExpression() {
     ASTNodePtr exprNode = make_shared<ASTNode>(ASTNodeType::Expression, currentToken.line, currentToken.column,currentToken.value);
     advance();
     return exprNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseExpression(TokenType type) {
     string ExpName = currentToken.value;
     ASTNodePtr exprNode = make_shared<ASTNode>(ASTNodeType::Expression, currentToken.line, currentToken.column,ExpName);
     expect(type);
     return exprNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseExpressionBooleana() {
     ASTNodePtr exprNode = nullptr;
     string boolName = currentToken.value;
@@ -409,7 +385,6 @@ ASTNodePtr AnalizadorSintactico::parseExpressionForInit() {
     }
     return initNode;
 }
-
 ASTNodePtr AnalizadorSintactico::parseExpressionForAsign() {
     ASTNodePtr expNode = make_shared<ASTNode>(ASTNodeType::Expression, currentToken.line,currentToken.column,"asign_para");
     if(isAssignmentOperator(peek(1).value)){

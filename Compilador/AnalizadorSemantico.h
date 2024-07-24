@@ -2,12 +2,10 @@
 #define ANALIZADORSEMANTICO_H
 
 #include "ast.h"
-#include <iostream>
 #include <unordered_map>
 #include <string>
 #include <vector>
 #include <stdexcept>
-using namespace std;
 
 struct InformacionVariable {
     string tipo;                      
@@ -23,8 +21,8 @@ struct InformacionVariable {
     string toString() const {
         string oss;
         oss= "Tipo: " + tipo + ", Valor: " + valor
-            + ", Linea de declaracion: " + to_string(lineaDeclaracion)
-            + ", Columna de declaracion: " + to_string(columnaDeclaracion);
+            + ", Línea de declaración: " + to_string(lineaDeclaracion)
+            + ", Columna de declaración: " + to_string(columnaDeclaracion);
         return oss;
     }
 
@@ -45,22 +43,22 @@ private:
 };
 
 class AnalizadorSemantico {
-    public:
-        AnalizadorSemantico() = default;
-        void analizar(const ASTNodePtr& root);
-        TablaDeSimbolos TablaDeSimbolos_;
+public:
+    AnalizadorSemantico() = default;
+    void analizar(const ASTNodePtr& root);
+    TablaDeSimbolos TablaDeSimbolos_;
 
-    private:
-        void visitarNodo(const ASTNodePtr& node);
-        void verificarDeclaracion(const ASTNodePtr& node);
-        void verificarAsignacion(const ASTNodePtr& node);
-        void verificarLectura(const ASTNodePtr& node);
-        void verificarImpresion(const ASTNodePtr& node);
-        void verificarDecision(const ASTNodePtr& node);
-        void verificarRepeticion(const ASTNodePtr& node);
-        void verificarExpresion(const ASTNodePtr& node);
-        void verificarExpresionBooleana(const ASTNodePtr& node);
-        string obtenerTipo(const ASTNodePtr& node);
+private:
+    void visitarNodo(const ASTNodePtr& node);
+    void verificarDeclaracion(const ASTNodePtr& node);
+    void verificarAsignacion(const ASTNodePtr& node);
+    void verificarLectura(const ASTNodePtr& node);
+    void verificarImpresion(const ASTNodePtr& node);
+    void verificarDecision(const ASTNodePtr& node);
+    void verificarRepeticion(const ASTNodePtr& node);
+    void verificarExpresion(const ASTNodePtr& node);
+    void verificarExpresionBooleana(const ASTNodePtr& node);
+    string obtenerTipo(const ASTNodePtr& node);
 };
 
 #endif
